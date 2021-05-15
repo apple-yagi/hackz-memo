@@ -36,10 +36,10 @@
               <div class="flex flex-col justify-center items-center">
                 <img
                   class="icon rounded-full"
-                  src="/icons/user-icon.svg"
+                  :src="post.poster.photoUrl"
                   alt="user"
                 />
-                <span>どりー</span>
+                <span>{{ post.poster.displayName }}</span>
               </div>
               <div class="pl-5 pt-2">{{ post.text }}</div>
             </div>

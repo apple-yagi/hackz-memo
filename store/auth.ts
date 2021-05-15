@@ -33,7 +33,6 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
       commit('RESET')
       return
     } else if (getters.isLogin) {
-      console.log(state.currentUser)
       return
     }
     commit('SET_USER', {
@@ -41,7 +40,6 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
       displayName: authUser.displayName,
       photoUrl: authUser.photoURL,
     } as CurrentUser)
-    console.log(state.currentUser)
   },
 
   async signIn({ commit }): Promise<void> {
