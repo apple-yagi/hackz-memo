@@ -1,70 +1,148 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">twitter-demo</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div class="container mx-auto">
+    <client-only>
+      <div class="flex">
+        <div class="sidebar">
+          <div class="sidebar-content">
+            <img src="/icons/logo.svg" alt="logo" />
+          </div>
+        </div>
+        <main class="main-content">
+          <div v-if="currentUser" class="form">
+            <div class="form-user">
+              <img
+                class="icon rounded-full"
+                :src="currentUser.photoUrl"
+                alt="user"
+              />
+            </div>
+            <div class="form-com">
+              <textarea
+                class="form-input"
+                type="text"
+                v-model="text"
+                placeholder="思いの丈を書きやがれ。"
+              />
+              <div class="text-right">
+                <button class="form-button mr-5" @click="submit">メモる</button>
+              </div>
+            </div>
+          </div>
+          <div v-else class="form justify-center items-center">
+            <button @click="signIn">サインイン</button>
+          </div>
+          <article class="article" v-for="(post, i) in posts" :key="i">
+            <div class="flex">
+              <div class="flex flex-col justify-center items-center">
+                <img
+                  class="icon rounded-full"
+                  src="/icons/user-icon.svg"
+                  alt="user"
+                />
+                <span>どりー</span>
+              </div>
+              <div class="pl-5 pt-2">{{ post.text }}</div>
+            </div>
+            <span class="pt-1">{{ post.created_at }}</span>
+          </article>
+        </main>
       </div>
-    </div>
+    </client-only>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
+import useData from '~/composables/index.composables'
 
-export default Vue.extend({})
+export default defineComponent({
+  setup() {
+    const { store, $postRepository } = useContext()
+    const { posts, postsIsLoading, postsError } = useData()
+    const text = ref('')
+
+    const signIn = () => {
+      store.dispatch('auth/signIn')
+    }
+
+    const signOut = () => {
+      store.dispatch('auth/signOut')
+    }
+
+    const submit = () => {
+      $postRepository.store({
+        uid: store.state.auth.currentUser.uid,
+        text: text.value,
+      })
+    }
+
+    return {
+      currentUser: computed(() => store.state.auth.currentUser),
+      submit,
+      posts,
+      postsIsLoading,
+      postsError,
+      signIn,
+      signOut,
+      text,
+    }
+  },
+})
 </script>
 
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
+<style lang="scss" scoped>
 .container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
+  width: 1020px;
 }
-*/
-.container {
-  margin: 0 auto;
+
+.main-content {
+  margin: auto;
+  width: 100%;
   min-height: 100vh;
+  border: solid 1px #fff;
+}
+
+.sidebar {
+  width: 220px;
+  &-content {
+    position: fixed;
+  }
+}
+
+.form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  border-bottom: solid 1px #fff;
+  padding: 15px;
+
+  &-user {
+    padding-right: 15px;
+  }
+
+  &-com {
+    width: 100%;
+  }
+
+  &-input {
+    width: 100%;
+    padding-top: 3px;
+    background-color: $bg-main;
+    border: none;
+    outline: none;
+  }
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.article {
+  border-bottom: solid 1px #fff;
+  padding: 30px 5px 0;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.icon {
+  width: 40px;
+  height: 40px;
 }
 </style>
