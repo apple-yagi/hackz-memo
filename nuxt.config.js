@@ -23,6 +23,7 @@ export default {
   plugins: [
     { src: '~/plugins/repository/user.repository.inject.ts' },
     { src: '~/plugins/repository/post.repository.inject.ts' },
+    { src: '~/plugins/vue-textarea-autosize.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

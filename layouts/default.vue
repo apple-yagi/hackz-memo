@@ -1,8 +1,69 @@
 <template>
-  <div>
-    <Nuxt />
+  <div class="container mx-auto">
+    <div class="flex">
+      <BaseSidebar />
+      <div class="w-full">
+        <BaseHeader />
+        <client-only>
+          <post-form
+            v-if="currentUser"
+            class="border"
+            :photoUrl="currentUser.photoUrl"
+            :text.sync="text"
+            :submit="submit"
+          ></post-form>
+          <div v-else class="flex py-6 border justify-center items-center">
+            <base-button :onClick="signIn">サインイン</base-button>
+          </div>
+        </client-only>
+        <Nuxt />
+      </div>
+    </div>
   </div>
 </template>
+
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
+import BaseHeader from '~/components/shared/BaseHeader.vue'
+import BaseSidebar from '~/components/shared/BaseSidebar.vue'
+
+export default defineComponent({
+  components: {
+    BaseHeader,
+    BaseSidebar,
+  },
+  setup() {
+    const { store, $postRepository } = useContext()
+    const text = ref('')
+
+    const signIn = () => {
+      store.dispatch('auth/signIn')
+    }
+
+    const submit = () => {
+      if (!text.value) return alert('文字を入力してください')
+
+      $postRepository.store({
+        uid: store.state.auth.currentUser.uid,
+        text: text.value,
+      })
+      text.value = ''
+    }
+
+    return {
+      currentUser: computed(() => store.state.auth.currentUser),
+      text,
+      submit,
+      signIn,
+    }
+  },
+})
+</script>
 
 <style lang="scss">
 html {
@@ -27,5 +88,9 @@ body {
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.container {
+  width: 1020px;
 }
 </style>

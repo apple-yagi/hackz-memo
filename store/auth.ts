@@ -28,7 +28,7 @@ export const mutations: MutationTree<AuthModuleState> = {
 }
 
 export const actions: ActionTree<AuthModuleState, RootState> = {
-  onAuthStateChanged({ commit, getters, state }, { authUser, claims }) {
+  onAuthStateChanged({ commit, getters }, { authUser, claims }) {
     if (!authUser) {
       commit('RESET')
       return

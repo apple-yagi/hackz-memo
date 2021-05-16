@@ -11,10 +11,7 @@ export class UserRepositoryImpl implements UserRepository {
 
   async getById(id: string): Promise<CurrentUser | null> {
     try {
-      const doc = await this.firestore
-        .collection('users')
-        .doc(id)
-        .get({ source: 'cache' })
+      const doc = await this.firestore.collection('users').doc(id).get()
       if (!doc.exists) return null
 
       return doc.data() as CurrentUser
