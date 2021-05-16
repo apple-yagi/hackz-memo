@@ -1,7 +1,7 @@
 import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import { Post } from '~/types/entity'
 
-export default function useData() {
+export default function usePostsByUid(uid: string) {
   const posts = ref<Post[]>([])
   const postsIsLoading = ref(true)
   const postsError = ref('')
@@ -9,9 +9,7 @@ export default function useData() {
 
   useAsync(async () => {
     try {
-      await $postRepository.getList({
-        callback: (ps: Post[]) => (posts.value = ps),
-      })
+      posts.value = await $postRepository.getByUid(uid)
     } catch (err) {
       console.log(err)
       postsError.value = 'データの取得に失敗しました'

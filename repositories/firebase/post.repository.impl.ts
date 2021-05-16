@@ -1,5 +1,5 @@
 import { NuxtFireInstance } from '@nuxtjs/firebase'
-import { CurrentUser, Post } from '~/types/entity'
+import { Post, User } from '~/types/entity'
 import { PostRepository } from '../post.repository'
 
 export class PostRepositoryImpl implements PostRepository {
@@ -19,19 +19,38 @@ export class PostRepositoryImpl implements PostRepository {
         .collection('posts')
         .orderBy('created_at', 'desc')
         .onSnapshot(async (snapshot) => {
-          const posts: Post[] = snapshot.docs.map((doc) => doc.data() as Post)
+          const posts: Post[] = snapshot.docs.map(
+            (doc) => ({ ...doc.data(), id: doc.id } as Post)
+          )
+
           const promiseList = posts.map((post) =>
             this.firestore.collection('users').doc(post.uid).get()
           )
-          const posters: CurrentUser[] = (await Promise.all(promiseList)).map(
-            (doc) => doc.data() as CurrentUser
+
+          const posters: User[] = (await Promise.all(promiseList)).map(
+            (doc) => ({ ...doc.data(), uid: doc.id } as User)
           )
+
           for (let i = 0; i < posts.length; i++) {
             posts[i].poster = posters[i]
           }
 
           callback(posts)
         })
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  }
+
+  async getByUid(uid: string): Promise<Post[]> {
+    try {
+      const snapshot = await this.firestore
+        .collection('posts')
+        .where('uid', '==', uid)
+        .orderBy('created_at', 'desc')
+        .get()
+
+      return snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Post))
     } catch (err) {
       return Promise.reject(err)
     }

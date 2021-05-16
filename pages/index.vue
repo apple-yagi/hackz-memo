@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import useData from '~/composables/index.composables'
+import { usePosts } from '~/composables'
 import BaseButton from '~/components/shared/BaseButton.vue'
 import BaseSidebar from '~/components/shared/BaseSidebar.vue'
 
@@ -18,7 +18,7 @@ export default defineComponent({
     BaseSidebar,
   },
   setup() {
-    const { posts, postsIsLoading, postsError } = useData()
+    const { posts, postsIsLoading, postsError } = usePosts()
 
     return {
       posts,
@@ -28,13 +28,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.main {
-  margin: auto;
-  width: 100%;
-  min-height: 100vh;
-  border: solid #fff;
-  border-width: 0 1px 1px 1px;
-}
-</style>

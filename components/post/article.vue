@@ -1,7 +1,7 @@
 <template>
   <article class="article">
     <div class="flex">
-      <div class="flex flex-col justify-center items-center">
+      <div class="flex flex-col items-center">
         <img
           class="rounded-full"
           :src="post.poster.photoUrl"
@@ -11,9 +11,9 @@
         />
         <span>{{ post.poster.displayName }}</span>
       </div>
-      <div class="pl-5 pt-2">{{ post.text }}</div>
+      <div class="pl-5 pt-2 whitespace-pre-wrap">{{ post.text }}</div>
     </div>
-    <span class="pt-1">{{ post.created_at }}</span>
+    <p class="mt-2 font-extralight text-sm">{{ post.created_at }}</p>
   </article>
 </template>
 

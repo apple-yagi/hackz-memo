@@ -6,5 +6,6 @@ export interface PostRepository {
   }: {
     callback: (posts: Post[]) => void
   }) => Promise<void>
+  getByUid: (uid: string) => Promise<Post[]>
   store: ({ uid, text }: { uid: string; text: string }) => Promise<void>
 }

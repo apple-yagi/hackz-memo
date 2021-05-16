@@ -1,6 +1,11 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex'
-import { CurrentUser } from '~/types/entity'
 import { RootState } from '.'
+
+interface CurrentUser {
+  uid: string
+  displayName: string
+  photoUrl: string
+}
 
 export interface AuthState {
   currentUser: CurrentUser | null

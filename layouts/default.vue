@@ -29,11 +29,13 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
+import BaseButton from '~/components/shared/BaseButton.vue'
 import BaseHeader from '~/components/shared/BaseHeader.vue'
 import BaseSidebar from '~/components/shared/BaseSidebar.vue'
 
 export default defineComponent({
   components: {
+    BaseButton,
     BaseHeader,
     BaseSidebar,
   },
@@ -88,6 +90,14 @@ body {
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.main {
+  margin: auto;
+  width: 100%;
+  min-height: 100vh;
+  border: solid #fff;
+  border-width: 0 1px 1px 1px;
 }
 
 .container {

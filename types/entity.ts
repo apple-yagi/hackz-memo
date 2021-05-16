@@ -1,7 +1,9 @@
-export interface CurrentUser {
+export interface User {
   uid: string
   displayName: string
   photoUrl: string
+  profile?: string
+  posts?: Post[]
 }
 
 export interface Post {
@@ -9,5 +11,5 @@ export interface Post {
   text: string
   created_at: string
   uid: string
-  poster?: CurrentUser
+  poster?: User
 }
