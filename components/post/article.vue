@@ -2,13 +2,15 @@
   <article class="article">
     <div class="flex">
       <div class="flex flex-col items-center">
-        <img
-          class="rounded-full"
-          :src="post.poster.photoUrl"
-          alt="user"
-          width="40"
-          height="40"
-        />
+        <nuxt-link :to="post.poster.uid">
+          <img
+            class="rounded-full"
+            :src="post.poster.photoUrl"
+            alt="user"
+            width="40"
+            height="40"
+          />
+        </nuxt-link>
         <span>{{ post.poster.displayName }}</span>
       </div>
       <div class="pl-5 pt-2 whitespace-pre-wrap">{{ post.text }}</div>
