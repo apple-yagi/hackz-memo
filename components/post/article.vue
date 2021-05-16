@@ -2,7 +2,7 @@
   <article class="article">
     <div class="flex">
       <div class="flex flex-col items-center">
-        <nuxt-link :to="post.poster.uid">
+        <nuxt-link :to="`/${post.poster.uid}`">
           <img
             class="rounded-full"
             :src="post.poster.photoUrl"
