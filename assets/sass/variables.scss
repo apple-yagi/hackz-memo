@@ -1,0 +1,22 @@
+// Background color palettes
+$bg-main: #191300;
+
+// UI color palettes
+$ui-accent: #FABE00;
+
+// Text color palettes
+$text-white: #FFFFFF;
+
+// Breakpotins mixin
+$breakpoints: ('xs': 'screen and (min-width: 0)',
+  'sm': 'screen and (min-width: 640px)',
+  'md': 'screen and (min-width: 768px)',
+  'lg': 'screen and (min-width: 1000px)',
+  'xl': 'screen and (min-width: 1280px)',
+) !default;
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}

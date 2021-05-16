@@ -1,10 +1,73 @@
 <template>
-  <div>
-    <Nuxt />
+  <div class="container mx-auto">
+    <div class="flex">
+      <BaseSidebar />
+      <div class="w-full">
+        <BaseHeader />
+        <client-only>
+          <post-form
+            v-if="currentUser"
+            class="border"
+            :photoUrl="currentUser.photoUrl"
+            :text.sync="text"
+            :submit="submit"
+          ></post-form>
+          <div v-else class="flex py-6 border justify-center items-center">
+            <base-button :onClick="signIn">サインイン</base-button>
+          </div>
+        </client-only>
+        <Nuxt />
+      </div>
+    </div>
   </div>
 </template>
 
-<style>
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
+import BaseButton from '~/components/shared/BaseButton.vue'
+import BaseHeader from '~/components/shared/BaseHeader.vue'
+import BaseSidebar from '~/components/shared/BaseSidebar.vue'
+
+export default defineComponent({
+  components: {
+    BaseButton,
+    BaseHeader,
+    BaseSidebar,
+  },
+  setup() {
+    const { store, $postRepository } = useContext()
+    const text = ref('')
+
+    const signIn = () => {
+      store.dispatch('auth/signIn')
+    }
+
+    const submit = () => {
+      if (!text.value) return alert('文字を入力してください')
+
+      $postRepository.store({
+        uid: store.state.auth.currentUser.uid,
+        text: text.value,
+      })
+      text.value = ''
+    }
+
+    return {
+      currentUser: computed(() => store.state.auth.currentUser),
+      text,
+      submit,
+      signIn,
+    }
+  },
+})
+</script>
+
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -17,6 +80,11 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  background-color: $bg-main;
+  color: $text-white;
+}
+
 *,
 *::before,
 *::after {
@@ -24,32 +92,15 @@ html {
   margin: 0;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.main {
+  margin: auto;
+  width: 100%;
+  min-height: 100vh;
+  border: solid #fff;
+  border-width: 0 1px 1px 1px;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.container {
+  width: 1020px;
 }
 </style>
