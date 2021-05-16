@@ -19,11 +19,6 @@
             </div>
           </div>
         </div>
-        <div class="flex mt-3">
-          <base-button>Instagram</base-button>
-          <base-button class="ml-3">Twitter</base-button>
-          <base-button class="ml-3">Facebook</base-button>
-        </div>
       </div>
       <div v-if="user.posts">
         <post-article
@@ -41,7 +36,6 @@ import {
   computed,
   defineComponent,
   ref,
-  useContext,
   useRoute,
   watch,
 } from '@nuxtjs/composition-api'
@@ -52,24 +46,10 @@ import { useUserWithPosts } from '~/composables'
 export default defineComponent({
   components: { BaseButton, BaseIconButton },
   setup() {
-    const { store, $userRepository } = useContext()
     const route = useRoute()
     const uid = computed(() => route.value.params.uid)
     const { user, userIsLoading } = useUserWithPosts(uid.value)
     const profile = ref('')
-    const clickEdit = ref(false)
-
-    const updateProfile = async () => {
-      await $userRepository.updateProfile({
-        uid: user.value.uid,
-        profile: profile.value,
-      })
-      location.reload()
-    }
-
-    const signOut = () => {
-      store.dispatch('auth/signOut')
-    }
 
     watch(
       () => user.value.profile,
@@ -81,10 +61,6 @@ export default defineComponent({
     return {
       user,
       userIsLoading,
-      profile,
-      signOut,
-      clickEdit,
-      updateProfile,
     }
   },
 })

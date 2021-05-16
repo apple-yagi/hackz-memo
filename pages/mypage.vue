@@ -46,11 +46,6 @@
             </div>
           </div>
         </div>
-        <div class="flex mt-3">
-          <base-button>Instagram</base-button>
-          <base-button class="ml-3">Twitter</base-button>
-          <base-button class="ml-3">Facebook</base-button>
-        </div>
       </div>
       <div v-if="user.posts">
         <post-article
