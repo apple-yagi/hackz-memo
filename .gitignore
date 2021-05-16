@@ -90,6 +90,7 @@ sw.*
 *.swp
 
 # Firebase
+.firebase
 firestore.indexes.json
 firestore.rules
 storage.rules
