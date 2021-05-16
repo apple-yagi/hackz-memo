@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <div class="flex">
+    <div class="flex flex-col md:flex-row">
       <BaseSidebar />
       <div class="w-full">
         <BaseHeader />
@@ -101,6 +101,6 @@ body {
 }
 
 .container {
-  width: 1020px;
+  max-width: 1020px;
 }
 </style>
