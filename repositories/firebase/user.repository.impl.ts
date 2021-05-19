@@ -2,7 +2,7 @@ import { NuxtFireInstance } from '@nuxtjs/firebase'
 import { Post, User } from '~/types/entity'
 import { UserRepository } from '../user.repository'
 
-export class UserRepositoryImpl implements UserRepository {
+export class FirebaseUserRepositoryImpl implements UserRepository {
   private firestore: firebase.default.firestore.Firestore
 
   constructor(fire: NuxtFireInstance) {

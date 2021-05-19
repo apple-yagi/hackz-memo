@@ -46,6 +46,9 @@
             </div>
           </div>
         </div>
+        <div class="text-right mt-2">
+          <base-button :onClick="signOut">サインアウト</base-button>
+        </div>
       </div>
       <div v-if="user.posts">
         <post-article
@@ -64,6 +67,7 @@ import {
   defineComponent,
   ref,
   useContext,
+  useRouter,
   watch,
 } from '@nuxtjs/composition-api'
 import BaseButton from '~/components/shared/BaseButton.vue'
@@ -74,6 +78,7 @@ export default defineComponent({
   components: { BaseButton, BaseIconButton },
   middleware: 'authenticated',
   setup() {
+    const router = useRouter()
     const { store, $userRepository } = useContext()
     const currentUser = computed(() => store.state.auth.currentUser)
     const { user, userIsLoading } = useUserWithPosts(currentUser.value.uid)
@@ -90,6 +95,7 @@ export default defineComponent({
 
     const signOut = () => {
       store.dispatch('auth/signOut')
+      router.push('/')
     }
 
     watch(

@@ -24,6 +24,7 @@ export default {
     { src: '~/plugins/repository/user.repository.inject.ts' },
     { src: '~/plugins/repository/post.repository.inject.ts' },
     { src: '~/plugins/vue-textarea-autosize.js' },
+    { src: '~/plugins/inmemory-persistedstate', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -86,4 +87,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // Enviroment
+  env: {
+    NODE_ENV: process.env.NODE_ENV
+  },
 }
