@@ -72,6 +72,7 @@ export default {
           synchronizeTabs: true
         }
       },
+      analytics: true,
     }
   },
 
