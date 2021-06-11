@@ -18,7 +18,9 @@ export default defineComponent({
       default: false,
     },
   },
-  setup() {},
+  setup({ onClick, disabled }) {
+    return { onClick, disabled }
+  },
 })
 </script>
 
