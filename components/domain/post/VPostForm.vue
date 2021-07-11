@@ -26,11 +26,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
-import BaseButton from '../shared/BaseButton.vue'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  components: { BaseButton },
   props: {
     photoUrl: {
       type: String as PropType<string>,

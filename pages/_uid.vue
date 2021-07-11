@@ -21,7 +21,7 @@
         </div>
       </div>
       <div v-if="user.posts">
-        <post-article
+        <v-post-card
           v-for="(post, i) in user.posts"
           :key="i"
           :post="{ ...post, poster: user }"
@@ -39,12 +39,11 @@ import {
   useRoute,
   watch,
 } from '@nuxtjs/composition-api'
-import BaseButton from '~/components/shared/BaseButton.vue'
-import BaseIconButton from '~/components/shared/BaseIconButton.vue'
+import VPostCard from '~/components/domain/post/VPostCard.vue'
 import { useUserWithPosts } from '~/composables'
 
 export default defineComponent({
-  components: { BaseButton, BaseIconButton },
+  components: { VPostCard },
   setup() {
     const route = useRoute()
     const uid = computed(() => route.value.params.uid)

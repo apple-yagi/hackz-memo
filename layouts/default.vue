@@ -5,13 +5,13 @@
       <div class="w-full">
         <BaseHeader />
         <client-only>
-          <post-form
+          <v-post-form
             v-if="currentUser"
             class="border"
             :photoUrl="currentUser.photoUrl"
             :text.sync="text"
             :submit="submit"
-          ></post-form>
+          />
           <div v-else class="flex py-6 border justify-center items-center">
             <base-button :onClick="signIn">サインイン</base-button>
           </div>
@@ -29,15 +29,11 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
-import BaseButton from '~/components/shared/BaseButton.vue'
-import BaseHeader from '~/components/shared/BaseHeader.vue'
-import BaseSidebar from '~/components/shared/BaseSidebar.vue'
+import VPostForm from '~/components/domain/post/VPostForm.vue'
 
 export default defineComponent({
   components: {
-    BaseButton,
-    BaseHeader,
-    BaseSidebar,
+    VPostForm,
   },
   setup() {
     const { store, $postRepository } = useContext()

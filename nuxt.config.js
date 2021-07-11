@@ -28,7 +28,9 @@ export default {
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: {
+    dirs: ['~/components/shared', '~/components/layout'],
+  },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -37,7 +39,7 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -58,32 +60,32 @@ export default {
       storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
       messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
       appId: process.env.FIREBASE_APP_ID,
-      measurementId: process.env.FIREBASE_MEASUREMENT_ID
+      measurementId: process.env.FIREBASE_MEASUREMENT_ID,
     },
     onFirebaseHosting: true,
     services: {
       auth: {
         initialize: {
-          onAuthStateChangedAction: "auth/onAuthStateChanged"
+          onAuthStateChangedAction: 'auth/onAuthStateChanged',
         },
       },
       firestore: {
         enablePersistence: {
-          synchronizeTabs: true
-        }
+          synchronizeTabs: true,
+        },
       },
       analytics: true,
-    }
+    },
   },
 
   // Global scss
   styleResources: {
-    scss: ['~/assets/sass/variables.scss']
+    scss: ['~/assets/sass/variables.scss'],
   },
 
   // Generate Configuration
   generate: {
-    fallback: true
+    fallback: true,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -91,6 +93,6 @@ export default {
 
   // Enviroment
   env: {
-    NODE_ENV: process.env.NODE_ENV
+    NODE_ENV: process.env.NODE_ENV,
   },
 }

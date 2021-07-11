@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <client-only>
-      <post-article v-for="(post, i) in posts" :key="i" :post="post" />
+      <v-post-card v-for="(post, i) in posts" :key="i" :post="post" />
     </client-only>
   </main>
 </template>
@@ -9,13 +9,11 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { usePosts } from '~/composables'
-import BaseButton from '~/components/shared/BaseButton.vue'
-import BaseSidebar from '~/components/shared/BaseSidebar.vue'
+import VPostCard from '~/components/domain/post/VPostCard.vue'
 
 export default defineComponent({
   components: {
-    BaseButton,
-    BaseSidebar,
+    VPostCard,
   },
   setup() {
     const { posts, postsIsLoading, postsError } = usePosts()

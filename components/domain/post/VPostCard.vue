@@ -1,7 +1,7 @@
 <template>
   <article class="article">
     <div class="flex">
-      <div class="flex flex-col items-center">
+      <div>
         <nuxt-link :to="`/${post.poster.uid}`">
           <img
             class="rounded-full"
@@ -11,9 +11,11 @@
             height="40"
           />
         </nuxt-link>
-        <span>{{ post.poster.displayName }}</span>
       </div>
-      <div class="pl-5 pt-2 whitespace-pre-wrap">{{ post.text }}</div>
+      <div class="pl-4">
+        <span class="font-bold">{{ post.poster.displayName }}</span>
+        <div class="pt-1 whitespace-pre-wrap">{{ post.text }}</div>
+      </div>
     </div>
     <p class="mt-2 font-extralight text-sm">{{ post.created_at }}</p>
   </article>
@@ -37,6 +39,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .article {
   border-bottom: solid 1px #fff;
-  padding: 30px 5px 0;
+  padding: 10px 10px 0;
 }
 </style>
