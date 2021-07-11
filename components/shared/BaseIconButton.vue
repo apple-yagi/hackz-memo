@@ -1,5 +1,5 @@
 <template>
-  <button class="button" @click="onClick">
+  <button class="button" @click="onClick" :disabled="isLoading">
     <slot></slot>
   </button>
 </template>
@@ -13,6 +13,10 @@ export default defineComponent({
       type: Function as PropType<() => void>,
       default: () => null,
     },
+    isLoading: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
   },
   setup() {},
 });
@@ -25,5 +29,9 @@ export default defineComponent({
   border-radius: 9999px;
   border: none;
   outline: none;
+
+  &:disabled {
+    background-color: #ccc;
+  }
 }
 </style>
