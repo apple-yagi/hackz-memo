@@ -1,4 +1,4 @@
-import { Post } from '~/types/entity'
+import { Post } from '~/types/entity';
 
 export const posts: Post[] = [
   {
@@ -121,4 +121,4 @@ export const posts: Post[] = [
     created_at: '2021/5/16 16:49:19',
     uid: '5',
   },
-]
+];

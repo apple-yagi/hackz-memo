@@ -7,22 +7,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import { usePosts } from '~/composables'
-import VPostCard from '~/components/domain/post/VPostCard.vue'
+import { defineComponent } from '@nuxtjs/composition-api';
+import { usePosts } from '~/composables';
+import VPostCard from '~/components/domain/post/VPostCard.vue';
 
 export default defineComponent({
   components: {
     VPostCard,
   },
   setup() {
-    const { posts, postsIsLoading, postsError } = usePosts()
+    const { posts, postsIsLoading, postsError } = usePosts();
 
     return {
       posts,
       postsIsLoading,
       postsError,
-    }
+    };
   },
-})
+});
 </script>

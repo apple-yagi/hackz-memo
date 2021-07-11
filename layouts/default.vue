@@ -28,39 +28,39 @@ import {
   defineComponent,
   ref,
   useContext,
-} from '@nuxtjs/composition-api'
-import VPostForm from '~/components/domain/post/VPostForm.vue'
+} from '@nuxtjs/composition-api';
+import VPostForm from '~/components/domain/post/VPostForm.vue';
 
 export default defineComponent({
   components: {
     VPostForm,
   },
   setup() {
-    const { store, $postRepository } = useContext()
-    const text = ref('')
+    const { store, $postRepository } = useContext();
+    const text = ref('');
 
     const signIn = () => {
-      store.dispatch('auth/signIn')
-    }
+      store.dispatch('auth/signIn');
+    };
 
     const submit = () => {
-      if (!text.value) return alert('文字を入力してください')
+      if (!text.value) return alert('文字を入力してください');
 
       $postRepository.store({
         uid: store.state.auth.currentUser.uid,
         text: text.value,
-      })
-      text.value = ''
-    }
+      });
+      text.value = '';
+    };
 
     return {
       currentUser: computed(() => store.state.auth.currentUser),
       text,
       submit,
       signIn,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss">

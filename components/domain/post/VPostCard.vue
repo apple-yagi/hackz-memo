@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
-import { Post } from '~/types/entity'
+import { defineComponent, PropType } from '@vue/composition-api';
+import { Post } from '~/types/entity';
 
 export default defineComponent({
   props: {
@@ -33,7 +33,7 @@ export default defineComponent({
     },
   },
   setup() {},
-})
+});
 </script>
 
 <style lang="scss" scoped>

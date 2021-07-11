@@ -38,31 +38,31 @@ import {
   ref,
   useRoute,
   watch,
-} from '@nuxtjs/composition-api'
-import VPostCard from '~/components/domain/post/VPostCard.vue'
-import { useUserWithPosts } from '~/composables'
+} from '@nuxtjs/composition-api';
+import VPostCard from '~/components/domain/post/VPostCard.vue';
+import { useUserWithPosts } from '~/composables';
 
 export default defineComponent({
   components: { VPostCard },
   setup() {
-    const route = useRoute()
-    const uid = computed(() => route.value.params.uid)
-    const { user, userIsLoading } = useUserWithPosts(uid.value)
-    const profile = ref('')
+    const route = useRoute();
+    const uid = computed(() => route.value.params.uid);
+    const { user, userIsLoading } = useUserWithPosts(uid.value);
+    const profile = ref('');
 
     watch(
       () => user.value.profile,
       (text) => {
-        profile.value = text || ''
+        profile.value = text || '';
       }
-    )
+    );
 
     return {
       user,
       userIsLoading,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>

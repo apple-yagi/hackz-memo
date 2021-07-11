@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api';
 
 export default defineComponent({
   props: {
@@ -44,7 +44,7 @@ export default defineComponent({
     },
   },
   setup() {},
-})
+});
 </script>
 
 <style lang="scss" scoped>

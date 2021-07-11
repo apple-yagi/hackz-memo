@@ -1,31 +1,31 @@
-import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import { User } from '~/types/entity'
+import { ref, useAsync, useContext } from '@nuxtjs/composition-api';
+import { User } from '~/types/entity';
 
 export default function useUser(id: string) {
   const user = ref<User>({
     uid: '',
     displayName: '',
     photoUrl: '',
-  })
-  const userIsLoading = ref(true)
-  const userError = ref('')
-  const { $userRepository } = useContext()
+  });
+  const userIsLoading = ref(true);
+  const userError = ref('');
+  const { $userRepository } = useContext();
 
   useAsync(async () => {
     try {
-      const result = await $userRepository.getByIdwithPosts(id)
+      const result = await $userRepository.getByIdwithPosts(id);
       if (!result) {
-        throw { message: 'Not Found User!' }
+        throw { message: 'Not Found User!' };
       }
 
-      user.value = result
+      user.value = result;
     } catch (err) {
-      console.log(err)
-      userError.value = err.message
+      console.log(err);
+      userError.value = err.message;
     } finally {
-      userIsLoading.value = false
+      userIsLoading.value = false;
     }
-  })
+  });
 
-  return { user, userIsLoading, userError }
+  return { user, userIsLoading, userError };
 }

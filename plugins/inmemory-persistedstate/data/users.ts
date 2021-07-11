@@ -1,4 +1,4 @@
-import { User } from '~/types/entity'
+import { User } from '~/types/entity';
 
 export const users: User[] = [
   {
@@ -26,4 +26,4 @@ export const users: User[] = [
     displayName: 'Browserslist',
     photoUrl: 'https://cdn.svgporn.com/logos/browserslist.svg',
   },
-]
+];

@@ -69,40 +69,40 @@ import {
   useContext,
   useRouter,
   watch,
-} from '@nuxtjs/composition-api'
-import VPostCard from '~/components/domain/post/VPostCard.vue'
-import { useUserWithPosts } from '~/composables'
+} from '@nuxtjs/composition-api';
+import VPostCard from '~/components/domain/post/VPostCard.vue';
+import { useUserWithPosts } from '~/composables';
 
 export default defineComponent({
   components: { VPostCard },
   middleware: 'authenticated',
   setup() {
-    const router = useRouter()
-    const { store, $userRepository } = useContext()
-    const currentUser = computed(() => store.state.auth.currentUser)
-    const { user, userIsLoading } = useUserWithPosts(currentUser.value.uid)
-    const profile = ref('')
-    const clickEdit = ref(false)
+    const router = useRouter();
+    const { store, $userRepository } = useContext();
+    const currentUser = computed(() => store.state.auth.currentUser);
+    const { user, userIsLoading } = useUserWithPosts(currentUser.value.uid);
+    const profile = ref('');
+    const clickEdit = ref(false);
 
     const updateProfile = async () => {
       await $userRepository.updateProfile({
         uid: user.value.uid,
         profile: profile.value,
-      })
-      location.reload()
-    }
+      });
+      location.reload();
+    };
 
     const signOut = () => {
-      store.dispatch('auth/signOut')
-      router.push('/')
-    }
+      store.dispatch('auth/signOut');
+      router.push('/');
+    };
 
     watch(
       () => user.value.profile,
       (text) => {
-        profile.value = text || ''
+        profile.value = text || '';
       }
-    )
+    );
 
     return {
       user,
@@ -111,9 +111,9 @@ export default defineComponent({
       signOut,
       clickEdit,
       updateProfile,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
