@@ -10,7 +10,7 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "yarn lint:js",
-    "test:e2e": "npx cypress open"
+    "test:e2e": "cd tests/e2e && yarn cypress:open"
   },
   "dependencies": {
     "@nuxtjs/composition-api": "^0.23.4",
