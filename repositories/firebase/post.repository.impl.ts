@@ -1,18 +1,18 @@
-import { NuxtFireInstance } from '@nuxtjs/firebase'
-import { Post, User } from '~/types/entity'
-import { PostRepository } from '../post.repository'
+import { NuxtFireInstance } from '@nuxtjs/firebase';
+import { Post, User } from '~/types/entity';
+import { PostRepository } from '../post.repository';
 
-export class PostRepositoryImpl implements PostRepository {
-  private firestore: firebase.default.firestore.Firestore
+export class FirebasePostRepositoryImpl implements PostRepository {
+  private firestore: firebase.default.firestore.Firestore;
 
   constructor(fire: NuxtFireInstance) {
-    this.firestore = fire.firestore
+    this.firestore = fire.firestore;
   }
 
   async getList({
     callback,
   }: {
-    callback: (posts: Post[]) => void
+    callback: (posts: Post[]) => void;
   }): Promise<void> {
     try {
       this.firestore
@@ -21,24 +21,24 @@ export class PostRepositoryImpl implements PostRepository {
         .onSnapshot(async (snapshot) => {
           const posts: Post[] = snapshot.docs.map(
             (doc) => ({ ...doc.data(), id: doc.id } as Post)
-          )
+          );
 
           const promiseList = posts.map((post) =>
             this.firestore.collection('users').doc(post.uid).get()
-          )
+          );
 
           const posters: User[] = (await Promise.all(promiseList)).map(
             (doc) => ({ ...doc.data(), uid: doc.id } as User)
-          )
+          );
 
           for (let i = 0; i < posts.length; i++) {
-            posts[i].poster = posters[i]
+            posts[i].poster = posters[i];
           }
 
-          callback(posts)
-        })
+          callback(posts);
+        });
     } catch (err) {
-      return Promise.reject(err)
+      return Promise.reject(err);
     }
   }
 
@@ -48,11 +48,13 @@ export class PostRepositoryImpl implements PostRepository {
         .collection('posts')
         .where('uid', '==', uid)
         .orderBy('created_at', 'desc')
-        .get()
+        .get();
 
-      return snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Post))
+      return snapshot.docs.map(
+        (doc) => ({ ...doc.data(), id: doc.id } as Post)
+      );
     } catch (err) {
-      return Promise.reject(err)
+      return Promise.reject(err);
     }
   }
 
@@ -62,9 +64,9 @@ export class PostRepositoryImpl implements PostRepository {
         text: text,
         uid: uid,
         created_at: new Date().toLocaleString('ja'),
-      })
+      });
     } catch (err) {
-      return Promise.reject(err)
+      return Promise.reject(err);
     }
   }
 }

@@ -1,11 +1,11 @@
 <template>
-  <button class="button" @click="onClick">
+  <button class="button" @click="onClick" :disabled="isLoading">
     <slot></slot>
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api';
 
 export default defineComponent({
   props: {
@@ -13,9 +13,13 @@ export default defineComponent({
       type: Function as PropType<() => void>,
       default: () => null,
     },
+    isLoading: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
   },
   setup() {},
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -25,5 +29,9 @@ export default defineComponent({
   border-radius: 9999px;
   border: none;
   outline: none;
+
+  &:disabled {
+    background-color: #ccc;
+  }
 }
 </style>

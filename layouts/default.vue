@@ -5,13 +5,15 @@
       <div class="w-full">
         <BaseHeader />
         <client-only>
-          <post-form
+          <v-post-form
             v-if="currentUser"
             class="border"
             :photoUrl="currentUser.photoUrl"
             :text.sync="text"
             :submit="submit"
-          ></post-form>
+            :isLoading="addPostIsLoading"
+            :error="addPostError"
+          />
           <div v-else class="flex py-6 border justify-center items-center">
             <base-button :onClick="signIn">サインイン</base-button>
           </div>
@@ -28,43 +30,38 @@ import {
   defineComponent,
   ref,
   useContext,
-} from '@nuxtjs/composition-api'
-import BaseButton from '~/components/shared/BaseButton.vue'
-import BaseHeader from '~/components/shared/BaseHeader.vue'
-import BaseSidebar from '~/components/shared/BaseSidebar.vue'
+} from '@nuxtjs/composition-api';
+import VPostForm from '~/components/domain/post/VPostForm.vue';
+import { useAddPost } from '~/composables/usePost';
 
 export default defineComponent({
   components: {
-    BaseButton,
-    BaseHeader,
-    BaseSidebar,
+    VPostForm,
   },
   setup() {
-    const { store, $postRepository } = useContext()
-    const text = ref('')
+    const { store } = useContext();
+    const { addPost, addPostIsLoading, addPostError } = useAddPost();
+    const text = ref('');
 
     const signIn = () => {
-      store.dispatch('auth/signIn')
-    }
+      store.dispatch('auth/signIn');
+    };
 
-    const submit = () => {
-      if (!text.value) return alert('文字を入力してください')
-
-      $postRepository.store({
-        uid: store.state.auth.currentUser.uid,
-        text: text.value,
-      })
-      text.value = ''
-    }
+    const submit = async () => {
+      await addPost(store.state.auth.currentUser.uid, text.value);
+      text.value = '';
+    };
 
     return {
       currentUser: computed(() => store.state.auth.currentUser),
       text,
+      addPostError,
+      addPostIsLoading,
       submit,
       signIn,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss">

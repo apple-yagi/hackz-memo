@@ -17,7 +17,10 @@
         placeholder="思いの丈を書きやがれ。"
       ></textarea-autosize>
       <div class="text-right">
-        <base-button class="mr-5" :onClick="submit" :disabled="!text.length"
+        <base-button
+          class="mr-5"
+          :onClick="submit"
+          :disabled="!text.length || isLoading"
           >メモる</base-button
         >
       </div>
@@ -26,11 +29,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
-import BaseButton from '../shared/BaseButton.vue'
+import { defineComponent, PropType } from '@nuxtjs/composition-api';
 
 export default defineComponent({
-  components: { BaseButton },
   props: {
     photoUrl: {
       type: String as PropType<string>,
@@ -44,9 +45,17 @@ export default defineComponent({
       type: String as PropType<string>,
       required: true,
     },
+    isLoading: {
+      type: Boolean as PropType<boolean>,
+      required: true,
+    },
+    error: {
+      type: String as PropType<string>,
+      required: true,
+    },
   },
   setup() {},
-})
+});
 </script>
 
 <style lang="scss" scoped>

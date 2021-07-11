@@ -1,4 +1,6 @@
-export default {
+import { NuxtConfig } from '@nuxt/types';
+
+const config: NuxtConfig = {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -24,10 +26,11 @@ export default {
     { src: '~/plugins/repository/user.repository.inject.ts' },
     { src: '~/plugins/repository/post.repository.inject.ts' },
     { src: '~/plugins/vue-textarea-autosize.js' },
+    { src: '~/plugins/inmemory-persistedstate', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: ['~/components/shared', '~/components/layout'],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -36,7 +39,7 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -51,39 +54,47 @@ export default {
   firebase: {
     lazy: false,
     config: {
-      apiKey: process.env.FIREBASE_API_KEY,
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.FIREBASE_APP_ID,
-      measurementId: process.env.FIREBASE_MEASUREMENT_ID
+      apiKey: process.env.FIREBASE_API_KEY as string,
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN as string,
+      projectId: process.env.FIREBASE_PROJECT_ID as string,
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET as string,
+      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID as string,
+      appId: process.env.FIREBASE_APP_ID as string,
+      measurementId: process.env.FIREBASE_MEASUREMENT_ID as string,
     },
     onFirebaseHosting: true,
     services: {
       auth: {
         initialize: {
-          onAuthStateChangedAction: "auth/onAuthStateChanged"
+          onAuthStateChangedAction: 'auth/onAuthStateChanged',
         },
       },
       firestore: {
         enablePersistence: {
-          synchronizeTabs: true
-        }
+          synchronizeTabs: true,
+        },
       },
-    }
+      analytics: true,
+    },
   },
 
   // Global scss
   styleResources: {
-    scss: ['~/assets/sass/variables.scss']
+    scss: ['~/assets/sass/variables.scss'],
   },
 
   // Generate Configuration
   generate: {
-    fallback: true
+    fallback: true,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-}
+
+  // Enviroment
+  env: {
+    NODE_ENV: process.env.NODE_ENV as string,
+  },
+};
+
+export default config;
