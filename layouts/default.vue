@@ -11,6 +11,8 @@
             :photoUrl="currentUser.photoUrl"
             :text.sync="text"
             :submit="submit"
+            :isLoading="addPostIsLoading"
+            :error="addPostError"
           />
           <div v-else class="flex py-6 border justify-center items-center">
             <base-button :onClick="signIn">サインイン</base-button>
@@ -30,32 +32,31 @@ import {
   useContext,
 } from '@nuxtjs/composition-api';
 import VPostForm from '~/components/domain/post/VPostForm.vue';
+import { useAddPost } from '~/composables/usePost';
 
 export default defineComponent({
   components: {
     VPostForm,
   },
   setup() {
-    const { store, $postRepository } = useContext();
+    const { store } = useContext();
+    const { addPost, addPostIsLoading, addPostError } = useAddPost();
     const text = ref('');
 
     const signIn = () => {
       store.dispatch('auth/signIn');
     };
 
-    const submit = () => {
-      if (!text.value) return alert('文字を入力してください');
-
-      $postRepository.store({
-        uid: store.state.auth.currentUser.uid,
-        text: text.value,
-      });
+    const submit = async () => {
+      await addPost(store.state.auth.currentUser.uid, text.value);
       text.value = '';
     };
 
     return {
       currentUser: computed(() => store.state.auth.currentUser),
       text,
+      addPostError,
+      addPostIsLoading,
       submit,
       signIn,
     };

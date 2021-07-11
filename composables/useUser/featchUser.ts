@@ -1,7 +1,7 @@
 import { ref, useAsync, useContext } from '@nuxtjs/composition-api';
 import { User } from '~/types/entity';
 
-export default function useUser(id: string) {
+export default function fetchUser(id: string) {
   const user = ref<User>({
     uid: '',
     displayName: '',

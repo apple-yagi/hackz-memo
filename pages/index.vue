@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api';
-import { usePosts } from '~/composables';
+import { fetchPosts } from '~/composables/usePost';
 import VPostCard from '~/components/domain/post/VPostCard.vue';
 
 export default defineComponent({
@@ -16,7 +16,7 @@ export default defineComponent({
     VPostCard,
   },
   setup() {
-    const { posts, postsIsLoading, postsError } = usePosts();
+    const { posts, postsIsLoading, postsError } = fetchPosts();
 
     return {
       posts,

@@ -71,7 +71,7 @@ import {
   watch,
 } from '@nuxtjs/composition-api';
 import VPostCard from '~/components/domain/post/VPostCard.vue';
-import { useUserWithPosts } from '~/composables';
+import { fetchUserWithPosts } from '~/composables/useUser';
 
 export default defineComponent({
   components: { VPostCard },
@@ -80,7 +80,7 @@ export default defineComponent({
     const router = useRouter();
     const { store, $userRepository } = useContext();
     const currentUser = computed(() => store.state.auth.currentUser);
-    const { user, userIsLoading } = useUserWithPosts(currentUser.value.uid);
+    const { user, userIsLoading } = fetchUserWithPosts(currentUser.value.uid);
     const profile = ref('');
     const clickEdit = ref(false);
 
