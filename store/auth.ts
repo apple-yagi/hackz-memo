@@ -1,15 +1,15 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import { RootState } from '.';
 
-interface CurrentUser {
+export type CurrentUser = {
   uid: string;
   displayName: string;
   photoUrl: string;
-}
+};
 
-export interface AuthState {
+export type AuthState = {
   currentUser: CurrentUser | null;
-}
+};
 
 export const state = (): AuthState => ({
   currentUser: null,
